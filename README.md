@@ -132,4 +132,6 @@ python retrain_pipeline.py
 
 ---
 ## Video Showcase
-https://youtu.be/M4GAIfsSc4o
+<video width="320" height="240" controls>
+  <source src="https://youtu.be/M4GAIfsSc4o" >
+</video>
