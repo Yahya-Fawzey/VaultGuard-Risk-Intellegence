@@ -165,9 +165,14 @@ elif mode == "Single Individual Entry":
         with col1:
             age = st.number_input("Age", min_value=18, max_value=120, step=1, value=None)
             income = st.number_input("Monthly Income ($)", min_value=0.0, step=100.0, value=None)
-            debt_ratio = st.number_input("Debt Ratio", min_value=0.0, step=0.01, value=None)
+            
+            # UPDATED: Now asks for percentage (0 to 100)
+            debt_ratio_pct = st.number_input("Debt Ratio (%)", min_value=0.0, max_value=100.0, step=1.0, value=None)
+            
             dependents = st.number_input("Number of Dependents", min_value=0, step=1, value=None)
-            revol_util = st.number_input("Revolving Utilization of Unsecured Lines", min_value=0.0, step=0.01, value=None)
+            
+            # UPDATED: Now asks for percentage (0 to 100)
+            revol_util_pct = st.number_input("Revolving Utilization of Unsecured Lines (%)", min_value=0.0, max_value=100.0, step=1.0, value=None)
             
         with col2:
             open_lines = st.number_input("Open Credit Lines & Loans", min_value=0, step=1, value=None)
@@ -179,19 +184,23 @@ elif mode == "Single Individual Entry":
         submit_clicked = st.form_submit_button("Run AI Assessment", type="primary")
 
     if submit_clicked:
-        inputs = [age, income, debt_ratio, dependents, revol_util, open_lines, real_estate, late_30_59, late_60_89, late_90]
+        inputs = [age, income, debt_ratio_pct, dependents, revol_util_pct, open_lines, real_estate, late_30_59, late_60_89, late_90]
         
         if None in inputs:
             st.error("⚠️ **Validation Error:** You must fill out ALL fields before generating an assessment.")
         else:
             with st.spinner("Processing applicant profile..."):
                 try:
-                    # 1. Create raw dataframe
+                    # CONVERT PERCENTAGES BACK TO DECIMALS FOR THE AI MODEL
+                    debt_ratio_model = debt_ratio_pct / 100.0
+                    revol_util_model = revol_util_pct / 100.0
+
+                    # 1. Create raw dataframe using the converted decimals
                     raw_data = pd.DataFrame([{
-                        'RevolvingUtilizationOfUnsecuredLines': revol_util,
+                        'RevolvingUtilizationOfUnsecuredLines': revol_util_model,
                         'age': age,
                         'NumberOfTime30-59DaysPastDueNotWorse': late_30_59,
-                        'DebtRatio': debt_ratio,
+                        'DebtRatio': debt_ratio_model,
                         'MonthlyIncome': income,
                         'NumberOfOpenCreditLinesAndLoans': open_lines,
                         'NumberOfTimes90DaysLate': late_90,
