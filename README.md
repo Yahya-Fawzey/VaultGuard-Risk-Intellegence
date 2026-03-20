@@ -37,7 +37,8 @@ The repository follows a strict separation of concerns, ensuring maintainability
     ├── data/                     # Data storage (ignored in version control)
     │   ├── raw/                  # Original, immutable datasets
     │   ├── processed/            # Cleaned data ready for modeling
-    │   └── demo/                 # Sample data for testing the UI
+    │   ├── demo/                 # Sample data for testing the UI
+    │   └── load_data.py          # Used for loading data both demo and training
     │
     ├── model/                    # Serialized model artifacts
     │   ├── best_xgb_model.pkl    # Trained XGBoost model
