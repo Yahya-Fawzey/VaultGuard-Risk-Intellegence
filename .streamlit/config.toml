@@ -1,0 +1,10 @@
+[theme]
+# Bank Navy Blue
+primaryColor = "#1E3A8A" 
+# Deep dark background for that modern "pro" look
+backgroundColor = "#0F172A" 
+# Slightly lighter dark blue for sidebars and cards
+secondaryBackgroundColor = "#1E293B" 
+# Crisp white text
+textColor = "#F8FAFC" 
+font = "sans serif"
