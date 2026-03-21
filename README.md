@@ -134,4 +134,4 @@ python retrain_pipeline.py
 
 ---
 ## Video Showcase
-https://github.com/user-attachments/assets/e30d6141-6028-4f9d-b7dd-60d97b8d4653
+https://github.com/user-attachments/assets/d7edb28c-f017-4f8a-821f-df0170606d74

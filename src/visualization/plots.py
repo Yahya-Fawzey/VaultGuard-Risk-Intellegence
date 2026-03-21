@@ -40,13 +40,18 @@ def plot_feature_importance(top_n=10):
     
     return fig
 
-def plot_risk_gauge(probability, threshold=0.30):
+def plot_risk_gauge(probability):
     """
-    CLIENT SIDE: Creates a sleek, interactive speedometer gauge for the risk score.
+    CLIENT SIDE: Creates a sleek, interactive 3-tier speedometer gauge.
     """
-    # Determine color based on risk
-    bar_color = "#ff4b4b" if probability >= threshold else "#00cc96"
-    
+    # Determine color based on 3 risk tiers (20% and 40% thresholds)
+    if probability < 0.20:
+        bar_color = "#00cc96"  # Green
+    elif probability < 0.40:
+        bar_color = "#ffa15a"  # Orange/Yellow
+    else:
+        bar_color = "#ff4b4b"  # Red
+        
     fig = go.Figure(go.Indicator(
         mode = "gauge+number",
         value = probability * 100,
@@ -59,13 +64,14 @@ def plot_risk_gauge(probability, threshold=0.30):
             'borderwidth': 2,
             'bordercolor': "gray",
             'steps': [
-                {'range': [0, threshold * 100], 'color': "rgba(0, 204, 150, 0.2)"},
-                {'range': [threshold * 100, 100], 'color': "rgba(255, 75, 75, 0.2)"}
+                {'range': [0, 20], 'color': "rgba(0, 204, 150, 0.15)"},   # Safe Zone
+                {'range': [20, 40], 'color': "rgba(255, 161, 90, 0.15)"},  # Warning Zone
+                {'range': [40, 100], 'color': "rgba(255, 75, 75, 0.15)"}   # Danger Zone
             ],
             'threshold': {
-                'line': {'color': "white", 'width': 4},
+                'line': {'color': "white", 'width': 3},
                 'thickness': 0.75,
-                'value': threshold * 100
+                'value': probability * 100
             }
         }
     ))
